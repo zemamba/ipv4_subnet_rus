@@ -1,0 +1,4 @@
+*_router_startup-config_*.txt
+*.log
+.DS_Store
+__pycache__/
