@@ -1,31 +1,31 @@
-# IPv4 маршруты РФ
+# Russian IPv4 Routes
 
-Готовые списки IPv4-маршрутов для российских подсетей.
+Ready-to-use IPv4 route lists for Russian subnets.
 
-Проект может быть полезен, если нужно быстро добавить маршруты российских сетей в роутер, серверный маршрутный список или собственную систему маршрутизации. Списки можно скачать и импортировать на свое устройство или использовать как основу для собственных правил.
+This repository provides route lists that can be downloaded and imported into a router, added to a server routing table, or used as input for custom routing rules.
 
-## Файлы
+## Files
 
-| Файл | Назначение |
+| File | Purpose |
 | --- | --- |
-| `routes/keenetic-routes.txt` | Импортируемый список команд `ip route` для Keenetic. |
-| `routes/cidr.txt` | Чистый список подсетей в CIDR-формате. Удобен для скриптов, firewall/ipset/nftables и собственных генераторов. |
-| `routes/linux-ip-route.sh` | Скрипт для Linux `iproute2`, использует `ip route replace ... via ...`. |
-| `routes/mikrotik-routeros.rsc` | Импортируемый файл для MikroTik RouterOS. |
-| `routes/openwrt-uci.sh` | Скрипт добавления маршрутов через OpenWrt UCI. |
-| `routes/summary.json` | Краткая статистика генерации. |
+| `routes/keenetic-routes.txt` | Importable `ip route` commands for Keenetic routers. |
+| `routes/cidr.txt` | Plain CIDR list for scripts, firewall tools, ipset, nftables, and custom generators. |
+| `routes/linux-ip-route.sh` | Linux `iproute2` script using `ip route replace ... via ...`. |
+| `routes/mikrotik-routeros.rsc` | Importable MikroTik RouterOS script. |
+| `routes/openwrt-uci.sh` | OpenWrt UCI route configuration script. |
+| `routes/summary.json` | Route list statistics and the default gateway. |
 
 ## Keenetic
 
-Файл `routes/keenetic-routes.txt` можно использовать как набор CLI-команд Keenetic. Перед импортом проверьте шлюз: в файле используется `192.168.1.1`.
+`routes/keenetic-routes.txt` contains Keenetic CLI commands. Check the gateway before importing: the file uses `192.168.1.1`.
 
-Пример ручного применения:
+Example command:
 
 ```text
 ip route 2.56.0.0 255.252.0.0 192.168.1.1 auto
 ```
 
-Если в вашей сети другой next-hop, замените `192.168.1.1` на адрес нужного шлюза перед импортом.
+If your network uses a different next hop, replace `192.168.1.1` before importing the file.
 
 ## Linux
 
@@ -33,11 +33,11 @@ ip route 2.56.0.0 255.252.0.0 192.168.1.1 auto
 sudo sh routes/linux-ip-route.sh
 ```
 
-Скрипт использует `ip route replace`, поэтому повторный запуск обновляет уже существующие маршруты.
+The script uses `ip route replace`, so running it again updates existing routes.
 
 ## MikroTik RouterOS
 
-Импортируйте файл `routes/mikrotik-routeros.rsc` через WinBox, WebFig или CLI:
+Import `routes/mikrotik-routeros.rsc` through WinBox, WebFig, or the CLI:
 
 ```routeros
 /import file-name=mikrotik-routeros.rsc
@@ -45,12 +45,18 @@ sudo sh routes/linux-ip-route.sh
 
 ## OpenWrt
 
-Перед запуском проверьте имя интерфейса в `routes/openwrt-uci.sh`. По умолчанию указан `lan`.
+Check the interface name in `routes/openwrt-uci.sh` before running it. The default interface is `lan`.
 
 ```sh
 sh routes/openwrt-uci.sh
 ```
 
-## Важно
+## Important
 
-Используйте список как практическую заготовку и проверяйте его перед использованием, список подсетей постоянно изменяется, могут быть расхождения с реальным перечнем.
+Treat this list as a practical starting point and verify it before use. Subnet allocations change over time, so the list may differ from the current address space associated with Russia.
+
+All device-specific files use `192.168.1.1` as the gateway. Replace it with the correct next hop for your network before importing or running them.
+
+## License
+
+This project is dedicated to the public domain under [CC0 1.0 Universal](LICENSE). You may copy, modify, distribute, and use it for any purpose, including commercial use, without asking for permission.
